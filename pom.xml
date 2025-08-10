@@ -6,7 +6,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>plugin.ecpg</groupId>
   <artifactId>plugin.ecpg</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <packaging>eclipse-plugin</packaging>
   <properties>
     <tycho.version>4.0.12</tycho.version>
@@ -34,4 +34,11 @@
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+    <dependency>
+      <groupId>plugin.common</groupId>
+      <artifactId>plugin.common</artifactId>
+      <version>0.0.1</version>
+    </dependency>
+  </dependencies>
 </project>
