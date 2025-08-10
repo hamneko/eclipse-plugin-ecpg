@@ -12,5 +12,6 @@
 	</environment>
 	<includeBundles>
 		<plugin id="org.eclipse.cdt.core"/>
+		<plugin id="org.eclipse.core.runtime"/>
 	</includeBundles>
 </target>
