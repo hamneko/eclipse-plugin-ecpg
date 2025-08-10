@@ -71,49 +71,6 @@ public class ECPGScanner extends PluginScanner {
 				}
 			}
 		}
-
-		// Process ECPG specific sqlca
-//		if ("sqlca".equalsIgnoreCase(nextToken.toString())) {
-//			//
-//			nextToken = super.nextToken();
-//			if (!".".equals(nextToken.toString())) {
-//				return nextToken;
-//			}
-//			nextToken = super.nextToken();
-//			if ("sqlcaid".equalsIgnoreCase(nextToken.toString())) {
-//				// char sqlcaid[8];
-//				nextToken.setType(IToken.tINTEGER);
-//			} else if ("sqlabc".equalsIgnoreCase(nextToken.toString())) {
-//				// long sqlabc;
-//				nextToken.setType(IToken.tINTEGER);
-//			} else if ("sqlcode".equalsIgnoreCase(nextToken.toString())) {
-//				// long sqlcode;
-//				nextToken.setType(IToken.tINTEGER);
-//			} else if ("sqlerrm".equalsIgnoreCase(nextToken.toString())) {
-//				// sqlerrm
-//				nextToken = super.nextToken();
-//				if (".".equals(nextToken.toString())) {
-//					nextToken = super.nextToken();
-//					if ("sqlerrml".equalsIgnoreCase(nextToken.toString())
-//							|| "sqlerrmc".equalsIgnoreCase(nextToken.toString())) {
-//						// int sqlerrml; or char sqlerrmc[SQLERRMC_LEN];
-//						nextToken.setType(IToken.tINTEGER);
-//					}
-//				}
-//			} else if ("sqlerrp".equalsIgnoreCase(nextToken.toString())) {
-//				// char sqlerrp[8];
-//				nextToken.setType(IToken.tINTEGER);
-//			} else if ("sqlerrd".equalsIgnoreCase(nextToken.toString())) {
-//				// long sqlerrd[6];
-//				nextToken.setType(IToken.tINTEGER);
-//			} else if ("sqlwarn".equalsIgnoreCase(nextToken.toString())) {
-//				// char sqlwarn[8];
-//				nextToken.setType(IToken.tINTEGER);
-//			} else if ("sqlstate".equalsIgnoreCase(nextToken.toString())) {
-//				// char sqlstate[5];
-//				nextToken.setType(IToken.tINTEGER);
-//			}
-//		}
 		return nextToken;
 	}
 
