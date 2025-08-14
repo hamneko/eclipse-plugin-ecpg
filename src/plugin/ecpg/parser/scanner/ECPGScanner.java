@@ -44,6 +44,14 @@ public class ECPGScanner extends PluginScanner {
 			}
 			while (true) {
 				nextToken = super.nextToken();
+				if ("sqlca".equalsIgnoreCase(nextToken.toString())) {
+					PluginTokenUtil.addSqlcaTokensEcpg(this, nextToken);
+					// Initialize sqlca struct.
+					tokens().add(PluginTokenUtil.createStructToken(this, nextToken));
+					tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, "sqlca"));
+					tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, "sqlca"));
+					continue;
+				}
 				if ("call".equalsIgnoreCase(nextToken.toString())) {
 					return super.nextToken();
 				}
