@@ -40,6 +40,7 @@ public class ECPGScanner extends PluginScanner {
 				tokens().add(PluginTokenUtil.createStructToken(this, dummyToken));
 				tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "sqlca"));
 				tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "sqlca"));
+				tokens().add(PluginTokenUtil.createSemiToken(this, dummyToken));
 				isSqlcaProcessed = true;
 			}
 			while (true) {
@@ -50,6 +51,7 @@ public class ECPGScanner extends PluginScanner {
 					tokens().add(PluginTokenUtil.createStructToken(this, nextToken));
 					tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, "sqlca"));
 					tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, "sqlca"));
+					tokens().add(PluginTokenUtil.createSemiToken(this, nextToken));
 					continue;
 				}
 				if ("call".equalsIgnoreCase(nextToken.toString())) {
