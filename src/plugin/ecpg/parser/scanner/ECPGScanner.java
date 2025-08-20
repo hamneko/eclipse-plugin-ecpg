@@ -41,6 +41,14 @@ public class ECPGScanner extends PluginScanner {
 				tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "sqlca"));
 				tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "sqlca"));
 				tokens().add(PluginTokenUtil.createSemiToken(this, dummyToken));
+				// SQLSTATE
+				tokens().add(PluginTokenUtil.createCharToken(this, dummyToken));
+				tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "SQLSTATE"));
+				tokens().add(PluginTokenUtil.createSemiToken(this, dummyToken));
+				// SQLCODE
+				tokens().add(PluginTokenUtil.createLongToken(this, dummyToken));
+				tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "SQLCODE"));
+				tokens().add(PluginTokenUtil.createSemiToken(this, dummyToken));
 				isSqlcaProcessed = true;
 			}
 			while (true) {
@@ -51,6 +59,14 @@ public class ECPGScanner extends PluginScanner {
 					tokens().add(PluginTokenUtil.createStructToken(this, nextToken));
 					tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, "sqlca"));
 					tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, "sqlca"));
+					tokens().add(PluginTokenUtil.createSemiToken(this, nextToken));
+					// SQLSTATE
+					tokens().add(PluginTokenUtil.createCharToken(this, nextToken));
+					tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, "SQLSTATE"));
+					tokens().add(PluginTokenUtil.createSemiToken(this, nextToken));
+					// SQLCODE
+					tokens().add(PluginTokenUtil.createLongToken(this, nextToken));
+					tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, "SQLCODE"));
 					tokens().add(PluginTokenUtil.createSemiToken(this, nextToken));
 					continue;
 				}
