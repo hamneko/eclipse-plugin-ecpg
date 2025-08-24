@@ -1,1 +1,60 @@
-# eclipse-plugin-epcg
+:toc:
+:toclevels: 5
+
+---
+
+= eclipse-plugin-epcg
+
+An Eclipse plugin that analyzes and parses [PostgreSQL ECPG](https://www.postgresql.org/docs/current/ecpg.html)'s unique syntax written in C source code.
+
+== Features
+
+* Syntax highlighting
+* Resolve host variables
+* Resolve sqlca without `#include` directive
+
+Currently it does *not* features:
+
+* Source code formatting
+* Resolve cursor variables
+
+== Getting Started
+
+=== Prerequisites
+
+* Eclipse CDT (2025.3~)
+
+=== Installation
+
+Put ```plugin.ecpg-x.x.x.YYYYMMDDhhmm.jar``` and ```plugin.common-x.x.x.YYYYMMDDhhmm.jar``` to plugins directory and start Eclipse.
+
+=== Change Language Mappings
+
+From eclipse menu bar, select [Window]-[Preferences...]. Under `C/C++` select `Language Mappings`, add following settings and click [Apply and Close].
+
+.Language Mappings
+[options="header"]
+|===
+|Content Type|Language
+|C Header File|ECPG
+|C Source File|ECPG
+|===
+
+  If you have custom file extension for ECPG file (ex. xxx.ecpg), add File Types.
+
+== Building from Source
+
+Clone the repository:
+
+[source,sh]
+----
+$ git clone https://github.com/hamneko/eclipse-plugin-epcg.git
+----
+
+Execute following command in cloned directory:
+
+[source,sh]
+----
+$ ./mvnw clean install
+----
+
