@@ -5,7 +5,7 @@
 
 = eclipse-plugin-epcg
 
-An Eclipse plugin that analyzes and parses [PostgreSQL ECPG](https://www.postgresql.org/docs/current/ecpg.html) 's unique syntax written in C source code.
+An Eclipse plugin that analyzes and parses https://www.postgresql.org/docs/current/ecpg.html[PostgreSQL ECPG] unique syntax written in C source code.
 
 == Features
 
