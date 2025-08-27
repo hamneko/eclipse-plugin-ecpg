@@ -2,9 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: ecpg-editor
 Bundle-SymbolicName: plugin.ecpg;singleton:=true
-Bundle-Version: 0.0.3
+Bundle-Version: 0.1.0
 Require-Bundle: org.eclipse.cdt.core,
  org.eclipse.core.runtime,
- plugin.common
+ plugin.common,
+ org.eclipse.text
 Automatic-Module-Name: plugin.ecpg
 Bundle-RequiredExecutionEnvironment: JavaSE-17
