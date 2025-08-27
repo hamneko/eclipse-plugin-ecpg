@@ -1,5 +1,7 @@
 package plugin.ecpg.parser.scanner;
 
+import java.util.List;
+
 import org.eclipse.cdt.core.dom.parser.IScannerExtensionConfiguration;
 import org.eclipse.cdt.core.parser.EndOfFileException;
 import org.eclipse.cdt.core.parser.FileContent;
@@ -18,9 +20,18 @@ public class ECPGScanner extends PluginScanner {
 
 	private boolean isSqlcaProcessed = false;
 
+	private List<ExecSqlPosition> execSqlPositions;
+
 	public ECPGScanner(FileContent fileContent, IScannerInfo info, ParserLanguage language, IParserLogService log,
 			IScannerExtensionConfiguration configuration, IncludeFileContentProvider readerFactory) {
 		super(fileContent, info, language, log, configuration, readerFactory);
+	}
+
+	public ECPGScanner(FileContent fileContent, IScannerInfo info, ParserLanguage language, IParserLogService log,
+			IScannerExtensionConfiguration configuration, IncludeFileContentProvider readerFactory,
+			List<ExecSqlPosition> execSqlPositions) {
+		super(fileContent, info, language, log, configuration, readerFactory);
+		this.execSqlPositions = execSqlPositions;
 	}
 
 	@Override
@@ -28,13 +39,15 @@ public class ECPGScanner extends PluginScanner {
 		if (tokens().peek() != null) {
 			return clearPrefetchedToken(tokens().poll());
 		}
+		int from = 0, to = 0;
 		IToken nextToken = super.nextToken();
 		// Process "EXEC" to ";" tokens().
 		if ("exec".equalsIgnoreCase(nextToken.toString())) {
+			from = nextToken.getOffset();
 			if (!isSqlcaProcessed) {
 				OverrideToken dummyToken = new OverrideToken();
-				dummyToken.setOffset(-1);
-				dummyToken.setEndOffset(0);
+				dummyToken.setOffset(Integer.MAX_VALUE);
+				dummyToken.setEndOffset(-1);
 				PluginTokenUtil.addSqlcaTokensEcpg(this, dummyToken);
 				// Initialize sqlca struct.
 				tokens().add(PluginTokenUtil.createStructToken(this, dummyToken));
@@ -84,6 +97,8 @@ public class ECPGScanner extends PluginScanner {
 				}
 				if (":".equals(nextToken.toString())) {
 					nextToken = super.nextToken();
+					//
+					to = nextToken.getOffset();
 					// Modify tokens to be treated as variables.
 					tokens().add(nextToken);
 					tokens().add(PluginTokenUtil.createAssignToken(this, nextToken));
@@ -92,6 +107,9 @@ public class ECPGScanner extends PluginScanner {
 					continue;
 				}
 				if (";".equals(nextToken.toString())) {
+					if (from != 0 && to != 0) {
+						execSqlPositions.add(new ExecSqlPosition(from, to));
+					}
 					tokens().add(nextToken);
 					return clearPrefetchedToken(tokens().poll());
 				}
@@ -100,4 +118,27 @@ public class ECPGScanner extends PluginScanner {
 		return nextToken;
 	}
 
+	public class ExecSqlPosition {
+		int from;
+		int to;
+
+		public ExecSqlPosition(int from, int to) {
+			this.from = from;
+			this.to = to;
+		}
+
+		public int getFrom() {
+			return from;
+		}
+
+		public int getTo() {
+			return to;
+		}
+
+		@Override
+		public String toString() {
+			return from + ":" + to;
+		}
+
+	}
 }

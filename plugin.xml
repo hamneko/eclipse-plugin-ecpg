@@ -10,4 +10,10 @@
     <contentType id="org.eclipse.cdt.core.cHeader" />
   </language>
 </extension>
+<extension point="org.eclipse.cdt.core.CodeFormatter">
+  <formatter
+    class="plugin.ecpg.ECPGCodeFormatter"
+    id="formatter"
+    name="ECPG Formatter"/>
+</extension>
 </plugin>
