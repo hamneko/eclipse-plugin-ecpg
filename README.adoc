@@ -12,10 +12,10 @@ An Eclipse plugin that analyzes and parses https://www.postgresql.org/docs/curre
 * Syntax highlighting
 * Resolve host variables
 * Resolve sqlca without `#include` directive
+* Source code formatting
 
 Currently it does *not* features:
 
-* Source code formatting
 * Resolve cursor variables
 
 == Getting Started
