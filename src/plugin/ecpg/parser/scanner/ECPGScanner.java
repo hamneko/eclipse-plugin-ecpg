@@ -18,7 +18,7 @@ import plugin.common.parser.scanner.PluginTokenUtil;
 @SuppressWarnings("restriction")
 public class ECPGScanner extends PluginScanner {
 
-	private boolean isSqlcaProcessed = false;
+	private boolean sqlcaProcessed = false;
 
 	private List<ExecSqlPosition> execSqlPositions;
 
@@ -44,10 +44,10 @@ public class ECPGScanner extends PluginScanner {
 		// Process "EXEC" to ";" tokens().
 		if ("exec".equalsIgnoreCase(nextToken.toString())) {
 			from = nextToken.getOffset();
-			if (!isSqlcaProcessed) {
+			if (!sqlcaProcessed) {
 				OverrideToken dummyToken = new OverrideToken();
-				dummyToken.setOffset(Integer.MAX_VALUE);
-				dummyToken.setEndOffset(-1);
+				dummyToken.setOffset(nextToken.getOffset());
+				dummyToken.setEndOffset(nextToken.getOffset() -1);
 				PluginTokenUtil.addSqlcaTokensEcpg(this, dummyToken);
 				// Initialize sqlca struct.
 				tokens().add(PluginTokenUtil.createStructToken(this, dummyToken));
@@ -62,27 +62,10 @@ public class ECPGScanner extends PluginScanner {
 				tokens().add(PluginTokenUtil.createLongToken(this, dummyToken));
 				tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "SQLCODE"));
 				tokens().add(PluginTokenUtil.createSemiToken(this, dummyToken));
-				isSqlcaProcessed = true;
+				sqlcaProcessed = true;
 			}
 			while (true) {
 				nextToken = super.nextToken();
-				if ("sqlca".equalsIgnoreCase(nextToken.toString())) {
-					PluginTokenUtil.addSqlcaTokensEcpg(this, nextToken);
-					// Initialize sqlca struct.
-					tokens().add(PluginTokenUtil.createStructToken(this, nextToken));
-					tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, "sqlca"));
-					tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, "sqlca"));
-					tokens().add(PluginTokenUtil.createSemiToken(this, nextToken));
-					// SQLSTATE
-					tokens().add(PluginTokenUtil.createCharToken(this, nextToken));
-					tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, "SQLSTATE"));
-					tokens().add(PluginTokenUtil.createSemiToken(this, nextToken));
-					// SQLCODE
-					tokens().add(PluginTokenUtil.createLongToken(this, nextToken));
-					tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, "SQLCODE"));
-					tokens().add(PluginTokenUtil.createSemiToken(this, nextToken));
-					continue;
-				}
 				if ("call".equalsIgnoreCase(nextToken.toString())) {
 					return super.nextToken();
 				}
