@@ -13,9 +13,6 @@ An Eclipse plugin that analyzes and parses https://www.postgresql.org/docs/curre
 * Resolve host variables
 * Resolve sqlca without `#include` directive
 * Source code formatting
-
-Currently it does *not* features:
-
 * Resolve cursor variables
 
 == Getting Started
@@ -41,6 +38,10 @@ From eclipse menu bar, select [Window]-[Preferences...]. Under `C/C++` select `L
 |===
 
   If you have custom file extension for ECPG file (ex. xxx.ecpg), add File Types.
+
+=== Change Formatter
+
+From eclipse menu bar, select [Window]-[Preferences...]. Under `C/C++` - `Code Style` select `Formatter`, change Code Formatter from [built-in] to ECPG and click [Apply and Close].
 
 == Building from Source
 
