@@ -11,9 +11,9 @@ An Eclipse plugin that analyzes and parses https://www.postgresql.org/docs/curre
 
 * Syntax highlighting
 * Resolve host variables
-* Resolve sqlca without `#include` directive
+* Resolve sqlca without `#include <sqlca.h>` directive
 * Source code formatting
-* Resolve cursor variables
+* Resolve cursor identifier
 
 == Getting Started
 
@@ -24,6 +24,8 @@ An Eclipse plugin that analyzes and parses https://www.postgresql.org/docs/curre
 === Installation
 
 Put ```plugin.ecpg-x.x.x.YYYYMMDDhhmm.jar``` and ```plugin.common-x.x.x.YYYYMMDDhhmm.jar``` to plugins directory and start Eclipse.
+
+TIP: ```plugin.common-x.x.x.YYYYMMDDhhmm.jar``` can be downloaded from https://github.com/hamneko/eclipse-plugin-common/releases[this repository].
 
 === Change Language Mappings
 
@@ -37,7 +39,7 @@ From eclipse menu bar, select [Window]-[Preferences...]. Under `C/C++` select `L
 |C Source File|ECPG
 |===
 
-  If you have custom file extension for ECPG file (ex. xxx.ecpg), add File Types.
+TIP: If you have custom file extension for ECPG file (ex. xxx.ecpg), add File Types.
 
 === Change Formatter
 
