@@ -86,14 +86,15 @@ public class ECPGScanner extends PluginScanner {
 					}
 					return nextToken;
 				}
-				if ("declare".equalsIgnoreCase(nextToken.toString())) {
+				if ("declare".equalsIgnoreCase(nextToken.toString())
+						|| "prepare".equalsIgnoreCase(nextToken.toString())) {
 					nextToken = super.nextToken();
 					if ("section".equalsIgnoreCase(nextToken.toString())) {
 						continue;
 					}
 					// Modify tokens to be treated as variable declaration.
 					cursorVariables.put(nextToken.toString(), "");
-					tokens().add(PluginTokenUtil.createCharToken(null, nextToken));
+					tokens().add(PluginTokenUtil.createCharToken(this, nextToken));
 					tokens().add(nextToken);
 					tokens().add(PluginTokenUtil.createSemiToken(this, nextToken));
 					continue;
