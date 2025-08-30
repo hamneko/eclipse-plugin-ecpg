@@ -21,7 +21,7 @@ An Eclipse plugin that analyzes and parses https://www.postgresql.org/docs/curre
 
 * Eclipse CDT (2023.3~)
 
-TIO: Older cdt versions may work, although not tested.
+TIP: Older cdt versions may work, although not tested.
 
 === Installation
 
