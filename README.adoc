@@ -23,7 +23,7 @@ An Eclipse plugin that analyzes and parses https://www.postgresql.org/docs/curre
 
 === Installation
 
-Put ```plugin.ecpg-x.x.x.YYYYMMDDhhmm.jar``` and ```plugin.common-x.x.x.YYYYMMDDhhmm.jar``` to plugins directory and start Eclipse.
+Put ```plugin.ecpg-x.x.x.YYYYMMDDhhmm.jar``` and ```plugin.common-x.x.x.YYYYMMDDhhmm.jar``` to Eclipseplugins directory (ex.~/eclipse/plugins) and start Eclipse.
 
 TIP: ```plugin.common-x.x.x.YYYYMMDDhhmm.jar``` can be downloaded from https://github.com/hamneko/eclipse-plugin-common/releases[this repository].
 
@@ -60,4 +60,3 @@ Execute following command in cloned directory:
 ----
 $ ./mvnw clean install
 ----
-
