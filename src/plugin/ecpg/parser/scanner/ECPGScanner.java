@@ -26,10 +26,6 @@ public class ECPGScanner extends PluginScanner {
 
 	private Map<String, String> cursorVariables = new HashMap<>();
 
-	private boolean colonStarted = false;
-
-	private boolean immediateAfterComma = false;
-
 	public ECPGScanner(FileContent fileContent, IScannerInfo info, ParserLanguage language, IParserLogService log,
 			IScannerExtensionConfiguration configuration, IncludeFileContentProvider readerFactory) {
 		super(fileContent, info, language, log, configuration, readerFactory);
@@ -47,29 +43,17 @@ public class ECPGScanner extends PluginScanner {
 		if (tokens().peek() != null) {
 			return clearPrefetchedToken(tokens().poll());
 		}
+		// Initialize required variables
 		int from = 0, to = 0;
+		boolean colonStarted = false;
+		boolean immediateAfterComma = false;
+		boolean immediateAfterVariable = false;
 		IToken nextToken = super.nextToken();
 		// Process "EXEC" to ";" tokens().
 		if ("exec".equalsIgnoreCase(nextToken.toString())) {
 			from = nextToken.getOffset();
 			if (!sqlcaProcessed) {
-				OverrideToken dummyToken = new OverrideToken();
-				dummyToken.setOffset(nextToken.getOffset());
-				dummyToken.setEndOffset(nextToken.getOffset() - 1);
-				PluginTokenUtil.addSqlcaTokensEcpg(this, dummyToken);
-				// Initialize sqlca struct.
-				tokens().add(PluginTokenUtil.createStructToken(this, dummyToken));
-				tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "sqlca"));
-				tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "sqlca"));
-				tokens().add(PluginTokenUtil.createSemiToken(this, dummyToken));
-				// SQLSTATE
-				tokens().add(PluginTokenUtil.createCharToken(this, dummyToken));
-				tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "SQLSTATE"));
-				tokens().add(PluginTokenUtil.createSemiToken(this, dummyToken));
-				// SQLCODE
-				tokens().add(PluginTokenUtil.createLongToken(this, dummyToken));
-				tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "SQLCODE"));
-				tokens().add(PluginTokenUtil.createSemiToken(this, dummyToken));
+				declareSqlca(nextToken);
 				sqlcaProcessed = true;
 			}
 			while (true) {
@@ -100,6 +84,8 @@ public class ECPGScanner extends PluginScanner {
 					continue;
 				}
 				if (cursorVariables.containsKey(nextToken.toString())) {
+					to = nextToken.getOffset();
+					immediateAfterVariable = true;
 					// Modify tokens to be treated as variables.
 					tokens().add(nextToken);
 					tokens().add(PluginTokenUtil.createAssignToken(this, nextToken));
@@ -109,8 +95,8 @@ public class ECPGScanner extends PluginScanner {
 				}
 				if (":".equals(nextToken.toString())) {
 					nextToken = super.nextToken();
-					//
 					to = nextToken.getOffset();
+					immediateAfterVariable = true;
 					// Modify tokens to be treated as variables.
 					tokens().add(nextToken);
 					tokens().add(PluginTokenUtil.createAssignToken(this, nextToken));
@@ -121,6 +107,7 @@ public class ECPGScanner extends PluginScanner {
 					continue;
 				}
 				if (colonStarted && !";".equals(nextToken.toString())) {
+					immediateAfterVariable = false;
 					// Ignore comma
 					if (",".equals(nextToken.toString())) {
 						immediateAfterComma = true;
@@ -131,6 +118,7 @@ public class ECPGScanner extends PluginScanner {
 					}
 					immediateAfterComma = false;
 					to = nextToken.getOffset();
+					immediateAfterVariable = true;
 					// Modify tokens to be treated as variables.
 					tokens().add(nextToken);
 					tokens().add(PluginTokenUtil.createAssignToken(this, nextToken));
@@ -141,16 +129,37 @@ public class ECPGScanner extends PluginScanner {
 				if (";".equals(nextToken.toString())) {
 					colonStarted = false;
 					immediateAfterComma = false;
-					if (to == 0) {
-						to = nextToken.getOffset();
+					if (!immediateAfterVariable) {
+						to = nextToken.getOffset() + 1;
 					}
 					execSqlPositions.add(new ExecSqlPosition(from, to));
 					tokens().add(nextToken);
 					return clearPrefetchedToken(tokens().poll());
 				}
+				immediateAfterVariable = false;
 			}
 		}
 		return nextToken;
+	}
+
+	private void declareSqlca(IToken nextToken) {
+		OverrideToken dummyToken = new OverrideToken();
+		dummyToken.setOffset(nextToken.getOffset());
+		dummyToken.setEndOffset(nextToken.getOffset() - 1);
+		PluginTokenUtil.addSqlcaTokensEcpg(this, dummyToken);
+		// Initialize sqlca struct.
+		tokens().add(PluginTokenUtil.createStructToken(this, dummyToken));
+		tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "sqlca"));
+		tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "sqlca"));
+		tokens().add(PluginTokenUtil.createSemiToken(this, dummyToken));
+		// SQLSTATE
+		tokens().add(PluginTokenUtil.createCharToken(this, dummyToken));
+		tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "SQLSTATE"));
+		tokens().add(PluginTokenUtil.createSemiToken(this, dummyToken));
+		// SQLCODE
+		tokens().add(PluginTokenUtil.createLongToken(this, dummyToken));
+		tokens().add(PluginTokenUtil.createIdentifierToken(this, dummyToken, "SQLCODE"));
+		tokens().add(PluginTokenUtil.createSemiToken(this, dummyToken));
 	}
 
 	public class ExecSqlPosition {
