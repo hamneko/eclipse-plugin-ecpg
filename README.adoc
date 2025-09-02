@@ -3,7 +3,7 @@
 
 ---
 
-= eclipse-plugin-epcg
+= eclipse-plugin-ecpg
 
 An Eclipse plugin that analyzes and parses https://www.postgresql.org/docs/current/ecpg.html[PostgreSQL ECPG] unique syntax written in C source code.
 
@@ -53,7 +53,7 @@ Clone the repository:
 
 [source,sh]
 ----
-$ git clone https://github.com/hamneko/eclipse-plugin-epcg.git
+$ git clone https://github.com/hamneko/eclipse-plugin-ecpg.git
 ----
 
 Execute following command in cloned directory:
