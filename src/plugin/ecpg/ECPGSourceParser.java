@@ -46,7 +46,7 @@ public class ECPGSourceParser extends GNUCSourceParser {
 
 	private boolean inPosition(int pos) {
 		for (ExecSqlPosition execSqlPosition : execSqlPositions) {
-			if (execSqlPosition.getFrom() <= pos && (execSqlPosition.getTo() - 1) >= pos) {
+			if (execSqlPosition.getFrom() <= pos && (execSqlPosition.getTo() - 2) >= pos) {
 				return true;
 			}
 		}
