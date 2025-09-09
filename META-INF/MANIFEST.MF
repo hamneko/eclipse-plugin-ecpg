@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: ecpg-editor
 Bundle-SymbolicName: plugin.ecpg;singleton:=true
 Bundle-Vendor: https://github.com/hamneko
-Bundle-Version: 0.2.3
+Bundle-Version: 0.2.4
 Require-Bundle: org.eclipse.cdt.core,
  org.eclipse.core.runtime,
  plugin.common,
