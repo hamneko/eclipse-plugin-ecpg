@@ -24,8 +24,8 @@ Examples are shown below:
 [source,c]
 ----
 // Use quotes for connection string
-EXEC SQL CONNECT TO "postgres@localhost:5432" USER postgres IDENTIFIED BY postgres;
-EXEC SQL CONNECT TO "tcp:postgresql://localhost/postgres" AS myconnection USER postgres IDENTIFIED BY postgres;
+EXEC SQL CONNECT TO "postgres@localhost:5432" USER "postgres" IDENTIFIED BY "postgres";
+EXEC SQL CONNECT TO "tcp:postgresql://localhost/postgres" AS myconnection USER "postgres" IDENTIFIED BY "postgres";
 // Or use host variables
 EXEC SQL BEGIN DECLARE SECTION;
   const char *target = "postgres@localhost:5432";
