@@ -15,6 +15,26 @@ An Eclipse plugin that analyzes and parses https://www.postgresql.org/docs/curre
 * Source code formatting
 * Resolve cursor identifier
 
+== Limitations
+
+Connection string in `+CONNECT+` statements needs to be enclosed in double quotes. (Unfortunately, it's imposible without Lexer modification) +
+Examples are shown below:
+
+.Examples
+[source,c]
+----
+// Use quotes for connection string
+EXEC SQL CONNECT TO "postgres@localhost:5432" USER postgres IDENTIFIED BY postgres;
+EXEC SQL CONNECT TO "tcp:postgresql://localhost/postgres" AS myconnection USER postgres IDENTIFIED BY postgres;
+// Or use host variables
+EXEC SQL BEGIN DECLARE SECTION;
+  const char *target = "postgres@localhost:5432";
+  const char *user = "postgres";
+  const char *passwd = "postgres";
+EXEC SQL END DECLARE SECTION;
+EXEC SQL CONNECT TO :target USER :user USING :passwd;
+----
+
 == Getting Started
 
 === Prerequisites
