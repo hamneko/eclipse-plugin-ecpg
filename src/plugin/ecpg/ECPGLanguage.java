@@ -17,8 +17,8 @@ import org.eclipse.cdt.core.parser.IncludeFileContentProvider;
 import org.eclipse.cdt.core.parser.ParserMode;
 import org.eclipse.core.runtime.CoreException;
 
+import plugin.common.parser.scanner.ExecSqlPosition;
 import plugin.ecpg.parser.scanner.ECPGScanner;
-import plugin.ecpg.parser.scanner.ECPGScanner.ExecSqlPosition;
 
 @SuppressWarnings("restriction")
 public class ECPGLanguage extends GCCLanguage {
