@@ -1,19 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+<extension point="org.eclipse.core.contenttype.contentTypes">
+  <content-type
+    id="plugin.ecpg.ECPGFileType"
+    name="ECPG Source File"
+    base-type="org.eclipse.cdt.core.cSource"
+    file-extensions="pgc"
+    priority="high">
+  </content-type>
+</extension>
 <extension point="org.eclipse.cdt.core.language">
   <language
     class="plugin.ecpg.ECPGLanguage"
-    id="editor"
+    id="language"
     name="ECPG">
-    <contentType id="org.eclipse.cdt.core.cSource" />
-    <contentType id="org.eclipse.cdt.core.cHeader" />
+    <contentType id="plugin.ecpg.ECPGFileType" />
   </language>
 </extension>
 <extension point="org.eclipse.cdt.core.CodeFormatter">
   <formatter
     class="plugin.ecpg.ECPGCodeFormatter"
-    id="formatter"
-    name="ECPG"/>
+    id="plugin.ecpg.formatter"
+    name="ECPG" />
+</extension>
+<extension point="org.eclipse.cdt.managedbuilder.core.buildDefinitions">
+  <tool
+    command="gcc"
+    dependencyCalculator="org.eclipse.cdt.managedbuilder.makegen.gnu.DefaultGCCDependencyCalculator"
+    id="plugin.ecpg.ECPGTool"
+    name="ECPG Tool"
+    natureFilter="both">
+    <option
+      id="plugin.ecpg.include.paths"
+      name="Include Paths"
+      kind="includePath"
+      valueType="includePath" />
+    <option
+      id="plugin.ecpg.symbols"
+      name="Defined Symbols"
+      kind="definedSymbol"
+      valueType="definedSymbols" />
+    <inputType
+      dependencyCalculator="org.eclipse.cdt.managedbuilder.makegen.gnu.DefaultGCCDependencyCalculator"
+      dependencyContentType="org.eclipse.cdt.core.cHeader"
+      id="plugin.ecpg.ECPGInputType"
+      languageId="plugin.ecpg.language"
+      multipleOfType="false"
+      primaryInput="false"
+      scannerConfigDiscoveryProfileId="org.eclipse.cdt.managedbuilder.core.GCCManagedMakePerProjectProfile"
+      sourceContentType="plugin.ecpg.ECPGFileType" />
+  </tool>
 </extension>
 </plugin>
