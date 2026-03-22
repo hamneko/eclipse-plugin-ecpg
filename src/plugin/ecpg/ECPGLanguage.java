@@ -30,7 +30,7 @@ public class ECPGLanguage extends GCCLanguage {
 
 	@Override
 	public String getId() {
-		return "plugin.ecpg.editor";
+		return "plugin.ecpg.language";
 	}
 
 	@SuppressWarnings("unchecked")
