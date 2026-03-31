@@ -93,8 +93,15 @@ public class ECPGScanner extends PluginScanner {
 					continue;
 				}
 				if (":".equals(nextToken.toString())) {
+					int colonPosition = nextToken.getEndOffset();
 					nextToken = super.nextToken();
 					to = nextToken.getOffset();
+					if (colonPosition != to) {
+						// Intentionally create error.
+						tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, nextToken.toString()));
+						tokens().add(PluginTokenUtil.createSemiToken(this, nextToken));
+						continue;
+					}
 					immediateAfterVariable = true;
 					// Modify tokens to be treated as variables.
 					tokens().add(nextToken);
