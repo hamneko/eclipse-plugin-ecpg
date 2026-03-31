@@ -121,6 +121,14 @@ public class ECPGScanner extends PluginScanner {
 					PluginTokenUtil.addAssignIntegerTokens(this, nextToken);
 					continue;
 				}
+				if ("sqlca".equalsIgnoreCase(nextToken.toString())) {
+					if (!"sqlca".equals(nextToken.toString())) {
+						// Intentionally create error.
+						tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, nextToken.toString()));
+						tokens().add(PluginTokenUtil.createIdentifierToken(this, nextToken, nextToken.toString()));
+					}
+					continue;
+				}
 				if (";".equals(nextToken.toString())) {
 					colonStarted = false;
 					immediateAfterComma = false;
