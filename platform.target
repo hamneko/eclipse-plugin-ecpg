@@ -2,7 +2,7 @@
 <?pde version="3.8"?>
 <target name="Running Platform">
 	<locations>
-		<location path="${env_var:eclipse_home}" type="Profile"/>
+		<location path="${env_var:ECLIPSE_HOME}" type="Profile"/>
 	</locations>
 	<environment>
 		<arch>x86_64</arch>
