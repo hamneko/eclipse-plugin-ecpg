@@ -49,19 +49,13 @@ Put ```plugin.ecpg-x.x.x.YYYYMMDDhhmm.jar``` and ```plugin.common-x.x.x.YYYYMMDD
 
 TIP: ```plugin.common-x.x.x.YYYYMMDDhhmm.jar``` can be downloaded from https://github.com/hamneko/eclipse-plugin-common/releases[this repository].
 
-=== Change Language Mappings
+=== Enable ECPG Tool for .pgc files
 
-From eclipse menu bar, select [Window]-[Preferences...]. Under `C/C++` select `Language Mappings`, add following settings and click [Apply and Close].
+In order to enable plugin features, select [Project]-[Properties] from eclipse menu bar. Under `C/C++ Build` select `Tool Chain Editor`, click [Select Tools...]. Select `ECPG Tool` from Available tools and click [Add tool], then click [OK]. Make sure `ECPG Tool` is added to `Used tools` and click [Apply and Close]. 
 
-.Language Mappings
-[options="header"]
-|===
-|Content Type|Language
-|C Header File|ECPG
-|C Source File|ECPG
-|===
+Now the `.pgc` file will be analyzed by the plugin.
 
-TIP: If you have custom file extension for ECPG file (ex. xxx.ecpg), add File Types.
+TIP: If you have multiple build configurations, each configuration needs the steps above.
 
 === Change Formatter
 
@@ -75,6 +69,8 @@ Clone the repository:
 ----
 $ git clone https://github.com/hamneko/eclipse-plugin-ecpg.git
 ----
+
+Verify that the environment variable ECLIPSE_HOME is set. Note that ECLIPSE_HOME should be set to the path of the directory where the Eclipse executable files are located.
 
 Execute following command in cloned directory:
 
